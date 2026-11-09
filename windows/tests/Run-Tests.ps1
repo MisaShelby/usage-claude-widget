@@ -41,7 +41,7 @@ function IsNumber($v) {
 }
 
 # Écart entre le résultat obtenu et l'attendu ; $null si identiques.
-function Diff($actual, $expected, [string]$path) {
+function Compare-Values($actual, $expected, [string]$path) {
     if ($null -eq $expected) {
         if ($null -eq $actual) { return $null }
         return "${path}: attendu null, obtenu $actual"
@@ -52,7 +52,7 @@ function Diff($actual, $expected, [string]$path) {
         foreach ($k in $keys) {
             if (-not $expected.ContainsKey($k)) { return "${path}.${k}: clé en trop" }
             if (-not $actual.ContainsKey($k)) { return "${path}.${k}: clé manquante" }
-            $d = Diff $actual[$k] $expected[$k] "$path.$k"
+            $d = Compare-Values $actual[$k] $expected[$k] "$path.$k"
             if ($d) { return $d }
         }
         return $null
@@ -61,7 +61,7 @@ function Diff($actual, $expected, [string]$path) {
         if (-not ($actual -is [array])) { return "${path}: attendu un tableau, obtenu $actual" }
         if ($actual.Count -ne $expected.Count) { return "${path}: $($actual.Count) éléments au lieu de $($expected.Count)" }
         for ($i = 0; $i -lt $expected.Count; $i++) {
-            $d = Diff $actual[$i] $expected[$i] "$path[$i]"
+            $d = Compare-Values $actual[$i] $expected[$i] "$path[$i]"
             if ($d) { return $d }
         }
         return $null
@@ -90,7 +90,7 @@ function Diff($actual, $expected, [string]$path) {
 $failures = New-Object Collections.ArrayList
 $passed = 0
 function Check([string]$name, $actual, $expected) {
-    $d = Diff $actual $expected $name
+    $d = Compare-Values $actual $expected $name
     if ($d) { [void]$script:failures.Add($d) } else { $script:passed++ }
 }
 

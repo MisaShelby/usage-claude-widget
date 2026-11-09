@@ -21,3 +21,19 @@ test('aucune apostrophe typographique dans une chaîne entre apostrophes (PowerS
         });
     }
 });
+
+// Alias de Windows PowerShell 5.1 : un alias passe avant une fonction du même nom.
+const ALIASES = `ac asnp cat cd chdir clc clear clhy cli clp cls clv cnsn compare copy cp cpi cpp curl cvpa dbp
+del diff dir dnsn ebp echo epal epcsv epsn erase etsn exsn fc fhx fl foreach ft fw gal gbp gc gcb gci gcm gcs gdr
+ghy gi gin gjb gl gm gmo gp gps gpv group gsn gsnp gsv gtz gu gv gwmi h history icm iex ihy ii ipal ipcsv ipmo ipsn
+irm ise iwmi iwr kill lp ls man md measure mi mount move mp mv nal ndr ni nmo npssc nsn nv ogv oh popd ps pushd pwd
+r rbp rcjb rcsn rd rdr ren ri rjb rm rmdir rmo rni rnp rp rsn rsnp rujb rv rvpa rwmi sajb sal saps sasv sbp sc scb
+select set shcm si sl sleep sls sort sp spjb spps spsv start stz sujb sv swmi tee trcm type wget where wjb write`
+    .split(/\s+/);
+
+test('aucune fonction PowerShell ne porte le nom d’un alias intégré', () => {
+    for (const file of scripts(root)) {
+        for (const [, name] of readFileSync(file, 'utf8').matchAll(/^\s*function\s+([\w-]+)/gm))
+            assert.ok(!ALIASES.includes(name.toLowerCase()), `${file}: function ${name}`);
+    }
+});
