@@ -52,10 +52,6 @@ jobs:
       - name: Take screenshots
         shell: powershell
         run: .\windows\tests\Take-Screenshots.ps1 -Out docs\screenshots
-      - uses: actions/upload-artifact@v4
-        with:
-          name: windows-screenshots
-          path: docs/screenshots/windows-*.png
       - name: Commit screenshots
         shell: bash
         run: |
@@ -64,3 +60,13 @@ jobs:
           git add docs/screenshots
           git diff --cached --quiet || git commit -m "Update Windows screenshots"
           git push
+      - name: Push debug captures to the ci-debug branch
+        if: failure()
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B ci-debug
+          git add -f ci-debug docs/screenshots || true
+          git commit -m "CI debug captures for ${GITHUB_SHA::7}" || true
+          git push -f origin ci-debug
