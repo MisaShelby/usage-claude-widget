@@ -7,12 +7,15 @@
     -Demo       données d'exemple (rien n'est lu ni enregistré) — aperçu et captures d'écran
     -OpenPanel  ouvre le panneau au démarrage    -OpenWeek  ouvre le graphique au démarrage
     -Lang fr|en force la langue (sinon : celle de Windows)
+    -Render dir dessine icônes, panneau et graphique dans des PNG puis quitte (vérification CI ;
+                avec -Demo)
 #>
 param(
     [switch]$Demo,
     [switch]$OpenPanel,
     [switch]$OpenWeek,
-    [ValidateSet('', 'fr', 'en')][string]$Lang = ''
+    [ValidateSet('', 'fr', 'en')][string]$Lang = '',
+    [string]$Render = ''
 )
 $ErrorActionPreference = 'Stop'
 $RequestedLang = $Lang
@@ -124,8 +127,8 @@ function Fill-Rounded($g, [Drawing.Color]$color, $x, $y, $w, $h, $r) {
 
 # ── Icônes de la zone de notification ────────────────────────────────────────
 # Tuile sombre, nombre coloré (vert / orange / rouge) et petite barre de progression.
-function New-TrayBitmap([string]$text, [double]$fraction, [string]$level) {
-    $size = [Windows.Forms.SystemInformation]::SmallIconSize.Width
+function New-TrayBitmap([string]$text, [double]$fraction, [string]$level, [int]$size = 0) {
+    if ($size -le 0) { $size = [Windows.Forms.SystemInformation]::SmallIconSize.Width }
     $bmp = New-Object Drawing.Bitmap $size, $size, ([Drawing.Imaging.PixelFormat]::Format32bppArgb)
     $g = [Drawing.Graphics]::FromImage($bmp)
     $g.SmoothingMode = [Drawing.Drawing2D.SmoothingMode]::AntiAlias
@@ -144,13 +147,21 @@ function New-TrayBitmap([string]$text, [double]$fraction, [string]$level) {
         Fill-Rounded $g $color $pad $barY $fillW $barH ($barH / 2)
     }
 
-    if ($text.Length -le 1) { $em = 0.74 } else { $em = 0.66 }
-    $font = New-Object Drawing.Font('Segoe UI', [single]($size * $em), [Drawing.FontStyle]::Bold, [Drawing.GraphicsUnit]::Pixel)
-    $format = New-Object Drawing.StringFormat
+    $format = [Drawing.StringFormat]::GenericTypographic.Clone()
+    $format.FormatFlags = $format.FormatFlags -bor [Drawing.StringFormatFlags]::NoWrap -bor [Drawing.StringFormatFlags]::NoClip
     $format.Alignment = [Drawing.StringAlignment]::Center
     $format.LineAlignment = [Drawing.StringAlignment]::Center
+    # Le plus gros possible, sans dépasser la tuile.
+    if ($text.Length -le 1) { $px = $size * 0.78 } else { $px = $size * 0.72 }
+    while ($true) {
+        $font = New-Object Drawing.Font('Segoe UI', [single]$px, [Drawing.FontStyle]::Bold, [Drawing.GraphicsUnit]::Pixel)
+        $width = $g.MeasureString($text, $font, (New-Object Drawing.PointF(0, 0)), $format).Width
+        if ($width -le $size - 2 -or $px -le 6) { break }
+        $font.Dispose()
+        $px -= 0.5
+    }
     $brush = New-Object Drawing.SolidBrush $color
-    $box = New-Object Drawing.RectangleF(0, -1, $size, $barY)
+    $box = New-Object Drawing.RectangleF(0, 0, $size, $barY)
     $g.DrawString($text, $font, $brush, $box, $format)
     $brush.Dispose(); $format.Dispose(); $font.Dispose(); $g.Dispose()
     return $bmp
@@ -403,8 +414,8 @@ function Refresh-Panel {
 }
 
 # ── Graphique de la semaine (portage de chart.js) ────────────────────────────
-$USED = Rgb 0x3584e4
-$OVER = Rgb 0xe66100
+$ColorUsed = Rgb 0x3584e4
+$ColorOver = Rgb 0xe66100
 
 function Top-Rounded([double]$x, [double]$y, [double]$w, [double]$h, [double]$r) {
     $p = New-Object Drawing.Drawing2D.GraphicsPath
@@ -505,18 +516,18 @@ function Draw-WeekChart($g, [double]$left, [double]$top, [double]$width, [double
         if ($used -le $budget) {
             if ($baseline - $usedTop -ge 0.5) {
                 $path = Top-Rounded $x $usedTop $colW ($baseline - $usedTop) $radius
-                $brush = New-Object Drawing.SolidBrush $USED; $g.FillPath($brush, $path); $brush.Dispose(); $path.Dispose()
+                $brush = New-Object Drawing.SolidBrush $ColorUsed; $g.FillPath($brush, $path); $brush.Dispose(); $path.Dispose()
             }
         } else {
             if ($baseline - $budgetTop -ge 0.5) {
-                $brush = New-Object Drawing.SolidBrush $USED
+                $brush = New-Object Drawing.SolidBrush $ColorUsed
                 $g.FillRectangle($brush, [single]$x, [single]$budgetTop, [single]$colW, [single]($baseline - $budgetTop))
                 $brush.Dispose()
             }
             if ($budget -gt 0) { $overBottom = $budgetTop - $gapPx } else { $overBottom = $budgetTop }
             if ($overBottom - $usedTop -ge 0.5) {
                 $path = Top-Rounded $x $usedTop $colW ($overBottom - $usedTop) $radius
-                $brush = New-Object Drawing.SolidBrush $OVER; $g.FillPath($brush, $path); $brush.Dispose(); $path.Dispose()
+                $brush = New-Object Drawing.SolidBrush $ColorOver; $g.FillPath($brush, $path); $brush.Dispose(); $path.Dispose()
             }
         }
         $capTop = [Math]::Min($budgetTop, $usedTop)
@@ -577,9 +588,9 @@ function Draw-WeekChart($g, [double]$left, [double]$top, [double]$width, [double
     foreach ($item in $items) {
         $sw = 10 * $s; $sy = $ly - 5 * $s
         switch ($item.kind) {
-            'used' { Fill-Rounded $g $USED $lx $sy $sw $sw (2 * $s) }
+            'used' { Fill-Rounded $g $ColorUsed $lx $sy $sw $sw (2 * $s) }
             'budget' { Fill-Rounded $g (& $ink 0.14) $lx $sy $sw $sw (2 * $s) }
-            'over' { Fill-Rounded $g $OVER $lx $sy $sw $sw (2 * $s) }
+            'over' { Fill-Rounded $g $ColorOver $lx $sy $sw $sw (2 * $s) }
             'planned' {
                 $pen = New-Object Drawing.Pen((& $ink 0.45), [single](1.2 * $s))
                 $pen.DashPattern = [single[]]@(2, 2)
@@ -594,6 +605,27 @@ function Draw-WeekChart($g, [double]$left, [double]$top, [double]$width, [double
 }
 
 $script:WeekForm = $null
+
+function Paint-Week($g, [int]$w) {
+    $g.SmoothingMode = [Drawing.Drawing2D.SmoothingMode]::AntiAlias
+    $sc = Get-Scale
+    $t = $script:Theme
+    if (-not $script:Last) {
+        [Windows.Forms.TextRenderer]::DrawText($g, (Tr 'waiting'), $script:FontNormal, (New-Object Drawing.Point([int](20 * $sc), [int](20 * $sc))), $t.fg)
+        return
+    }
+    $status = $script:Last.status; $usage = $script:Last.usage; $now = $script:Last.now
+    $chart = weekChart @{ state = $script:State; status = $status; resetAt = $usage.resetAt }
+    $days = @($chart.days)
+    $title = Tr 'chartTitle'
+    if ($days.Count -gt 0) { $title = Tr 'chartTitleRange' (dayLabel $days[0].key $Lang) (dayLabel $days[$days.Count - 1].key $Lang) }
+    $flags = [Windows.Forms.TextFormatFlags]'HorizontalCenter, SingleLine, NoPrefix, EndEllipsis'
+    [Windows.Forms.TextRenderer]::DrawText($g, $title, $script:FontTitle, (New-Object Drawing.Rectangle(0, [int](16 * $sc), $w, [int](30 * $sc))), $t.fg, $flags)
+    $summary = Tr 'chartSummary' (pctText $usage.utilization $Lang) (pctText (100 - [double]$usage.utilization) $Lang) (dayLabel (localKey $usage.resetAt) $Lang) (hhmm $usage.resetAt)
+    [Windows.Forms.TextRenderer]::DrawText($g, $summary, $script:FontNormal, (New-Object Drawing.Rectangle(0, [int](48 * $sc), $w, [int](22 * $sc))), $t.dim, $flags)
+    Draw-WeekChart $g (20 * $sc) (78 * $sc) ($w - 40 * $sc) (330 * $sc) $chart (hhmm $usage.resetAt)
+    [Windows.Forms.TextRenderer]::DrawText($g, (Tr 'chartFooter' (hhmm $now)), $script:FontSmall, (New-Object Drawing.Rectangle(0, [int](414 * $sc), $w, [int](20 * $sc))), $t.dim, $flags)
+}
 
 function Show-Week {
     if ($script:WeekForm -and -not $script:WeekForm.IsDisposed) { $script:WeekForm.Activate(); return }
@@ -619,28 +651,7 @@ function Show-Week {
     $form.AcceptButton = $button
     $form.CancelButton = $button
     $form.Add_Paint({ param($src, $e)
-        try {
-            $g = $e.Graphics
-            $g.SmoothingMode = [Drawing.Drawing2D.SmoothingMode]::AntiAlias
-            $sc = Get-Scale
-            $t = $script:Theme
-            $w = $src.ClientSize.Width
-            if (-not $script:Last) {
-                [Windows.Forms.TextRenderer]::DrawText($g, (Tr 'waiting'), $script:FontNormal, (New-Object Drawing.Point([int](20 * $sc), [int](20 * $sc))), $t.fg)
-                return
-            }
-            $status = $script:Last.status; $usage = $script:Last.usage; $now = $script:Last.now
-            $chart = weekChart @{ state = $script:State; status = $status; resetAt = $usage.resetAt }
-            $days = @($chart.days)
-            $title = Tr 'chartTitle'
-            if ($days.Count -gt 0) { $title = Tr 'chartTitleRange' (dayLabel $days[0].key $Lang) (dayLabel $days[$days.Count - 1].key $Lang) }
-            $flags = [Windows.Forms.TextFormatFlags]'HorizontalCenter, SingleLine, NoPrefix, EndEllipsis'
-            [Windows.Forms.TextRenderer]::DrawText($g, $title, $script:FontTitle, (New-Object Drawing.Rectangle(0, [int](16 * $sc), $w, [int](30 * $sc))), $t.fg, $flags)
-            $summary = Tr 'chartSummary' (pctText $usage.utilization $Lang) (pctText (100 - [double]$usage.utilization) $Lang) (dayLabel (localKey $usage.resetAt) $Lang) (hhmm $usage.resetAt)
-            [Windows.Forms.TextRenderer]::DrawText($g, $summary, $script:FontNormal, (New-Object Drawing.Rectangle(0, [int](48 * $sc), $w, [int](22 * $sc))), $t.dim, $flags)
-            Draw-WeekChart $g (20 * $sc) (78 * $sc) ($w - 40 * $sc) (330 * $sc) $chart (hhmm $usage.resetAt)
-            [Windows.Forms.TextRenderer]::DrawText($g, (Tr 'chartFooter' (hhmm $now)), $script:FontSmall, (New-Object Drawing.Rectangle(0, [int](414 * $sc), $w, [int](20 * $sc))), $t.dim, $flags)
-        } catch { Write-Log "graphique : $_ $($_.InvocationInfo.PositionMessage)" }
+        try { Paint-Week $e.Graphics $src.ClientSize.Width } catch { Write-Log "graphique : $_ $($_.InvocationInfo.PositionMessage)" }
     })
     $form.Add_FormClosed({ $script:WeekForm = $null })
     $script:WeekForm = $form
@@ -912,6 +923,32 @@ function Get-DemoUsage {
     return $script:DemoUsage
 }
 
+# ── Vérification hors écran (-Render) ───────────────────────────────────────
+# Dessine les icônes, le panneau et le graphique dans des PNG : toute erreur de dessin
+# arrête le script (code de sortie ≠ 0), sans dépendre d'un bureau visible.
+function Render-Offscreen([string]$dir) {
+    New-Item -ItemType Directory -Force -Path $dir | Out-Null
+    Apply-Usage (Get-DemoUsage) (NowMs)
+    $status = $script:Last.status; $u = [double]$script:Last.usage.utilization
+    foreach ($size in @(16, 24, 32)) {
+        (New-TrayBitmap (Short $status.progress) (barFraction $status.progress) (barLevel $status.progress) $size).Save((Join-Path $dir "icon-day-$size.png"))
+        (New-TrayBitmap (Short $u) ($u / 100) (barLevel $u) $size).Save((Join-Path $dir "icon-week-$size.png"))
+    }
+    $form = New-Object Windows.Forms.Form
+    $form.FormBorderStyle = [Windows.Forms.FormBorderStyle]::None
+    Layout-Panel $form
+    $bmp = New-Object Drawing.Bitmap $form.ClientSize.Width, $form.ClientSize.Height
+    $g = [Drawing.Graphics]::FromImage($bmp)
+    Paint-Panel $g $form
+    $g.Dispose(); $bmp.Save((Join-Path $dir 'panel.png')); $bmp.Dispose(); $form.Dispose()
+    $s = Get-Scale
+    $bmp = New-Object Drawing.Bitmap ([int](720 * $s)), ([int](440 * $s))
+    $g = [Drawing.Graphics]::FromImage($bmp)
+    $g.Clear($script:Theme.bg)
+    Paint-Week $g $bmp.Width
+    $g.Dispose(); $bmp.Save((Join-Path $dir 'week.png')); $bmp.Dispose()
+}
+
 function Quit-App {
     foreach ($timer in @($script:RefreshTimer, $script:PollTimer, $script:RetryTimer)) { if ($timer) { $timer.Stop() } }
     foreach ($icon in @($script:DayIcon, $script:WeekIcon)) {
@@ -948,6 +985,11 @@ try {
         $icon.Add_MouseClick({ param($src, $e) if ($e.Button -eq [Windows.Forms.MouseButtons]::Left) { Toggle-Panel } })
     }
     Update-Tray
+    if ($Render) {
+        Render-Offscreen $Render
+        foreach ($icon in @($script:DayIcon, $script:WeekIcon)) { $icon.Dispose() }
+        exit 0
+    }
     $script:DayIcon.Visible = $true
     $script:WeekIcon.Visible = $true
 

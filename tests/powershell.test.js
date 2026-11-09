@@ -51,3 +51,17 @@ test('[Math]::Max/Min ne commence pas par un entier littéral', () => {
         });
     }
 });
+
+// PowerShell ignore la casse des variables : $USED (une couleur) et $used (une valeur)
+// sont la même variable. Une variable en majuscules ne doit pas avoir d'homonyme.
+test('aucune variable en MAJUSCULES n’a un homonyme d’une autre casse', () => {
+    for (const file of scripts(root)) {
+        const names = new Set([...readFileSync(file, 'utf8').matchAll(/\$(?:script:)?([A-Za-z_]\w*)/g)].map(m => m[1]));
+        for (const name of names) {
+            if (name.length < 3 || name !== name.toUpperCase() || !/[A-Z]/.test(name))
+                continue;
+            const twins = [...names].filter(n => n !== name && n.toLowerCase() === name.toLowerCase());
+            assert.deepEqual(twins, [], `${file}: $${name} et ${twins.map(t => '$' + t).join(', ')}`);
+        }
+    }
+});

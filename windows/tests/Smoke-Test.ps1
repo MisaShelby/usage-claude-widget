@@ -11,6 +11,24 @@ trap {
 $app = (Resolve-Path (Join-Path $PSScriptRoot '..\ClaudeBudget.ps1')).Path
 $log = Join-Path $env:LOCALAPPDATA 'ClaudeBudget\widget.log'
 if (Test-Path $log) { Remove-Item $log }
+
+# Dessin hors écran : icônes, panneau, graphique (toute erreur de dessin fait échouer).
+foreach ($lang in @('en', 'fr')) {
+    $dir = Join-Path $env:RUNNER_TEMP "render-$lang"
+    if (-not $env:RUNNER_TEMP) { $dir = Join-Path $env:TEMP "render-$lang" }
+    $p = Start-Process -FilePath 'powershell.exe' -Wait -PassThru -WindowStyle Hidden -ArgumentList @(
+        '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', "`"$app`"", '-Demo', '-Lang', $lang, '-Render', "`"$dir`"")
+    if (Test-Path $log) {
+        Get-Content $log | ForEach-Object { Write-Host "::error::[render $lang] $_" }
+        throw "drawing failed ($lang)"
+    }
+    if ($p.ExitCode -ne 0) { throw "render exited with code $($p.ExitCode) ($lang)" }
+    foreach ($file in @('panel.png', 'week.png', 'icon-day-16.png', 'icon-week-32.png')) {
+        if (-not (Test-Path (Join-Path $dir $file))) { throw "render: $file missing ($lang)" }
+    }
+    Write-Host "render ($lang): icons, panel and week chart drawn"
+}
+
 foreach ($lang in @('en', 'fr')) {
     $argList = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', "`"$app`"", '-Demo', '-OpenPanel', '-OpenWeek', '-Lang', $lang)
     $p = Start-Process -FilePath 'powershell.exe' -ArgumentList $argList -PassThru
