@@ -80,11 +80,11 @@ $taskbarH = $bounds.Bottom - $work.Bottom
 # 1. Notification area + detail panel.
 $p = Start-Widget @('-OpenPanel')
 try {
-    $strip = New-Object Drawing.Rectangle(($bounds.Right - 420), $work.Bottom, 420, [Math]::Max(1, $taskbarH))
+    $strip = New-Object Drawing.Rectangle(($bounds.Right - 420), $work.Bottom, 420, [Math]::Max([int]1, $taskbarH))
     Save-Region $strip 'windows-taskbar.png' 2
     $panel = Window-Rect $(if ($Lang -eq 'fr') { 'Budget Claude' } else { 'Claude Budget' })
-    $x = [Math]::Max(0, $panel.Left - 24)
-    $y = [Math]::Max(0, $panel.Top - 24)
+    $x = [Math]::Max([int]0, $panel.Left - 24)
+    $y = [Math]::Max([int]0, $panel.Top - 24)
     Save-Region (New-Object Drawing.Rectangle($x, $y, ($bounds.Right - $x), ($bounds.Bottom - $y))) 'windows-panel.png'
 } finally { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue }
 

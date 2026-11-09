@@ -37,3 +37,13 @@ test('aucune fonction PowerShell ne porte le nom d’un alias intégré', () => 
             assert.ok(!ALIASES.includes(name.toLowerCase()), `${file}: function ${name}`);
     }
 });
+
+// PowerShell 5.1 choisit la surcharge de [Math]::Max/Min d'après le 1er argument :
+// [Math]::Min(1, 0.62) donne 1 (version entière). Écrire 1.0 ou [double]1.
+test('[Math]::Max/Min ne commence pas par un entier littéral', () => {
+    for (const file of scripts(root)) {
+        readFileSync(file, 'utf8').split('\n').forEach((line, i) => {
+            assert.ok(!/\[Math\]::(Max|Min)\(\s*-?\d+\s*,/.test(line), `${file}:${i + 1}: ${line.trim()}`);
+        });
+    }
+});

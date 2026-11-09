@@ -130,16 +130,16 @@ function New-TrayBitmap([string]$text, [double]$fraction, [string]$level) {
     $g.SmoothingMode = [Drawing.Drawing2D.SmoothingMode]::AntiAlias
     $g.TextRenderingHint = [Drawing.Text.TextRenderingHint]::AntiAliasGridFit
     $g.Clear([Drawing.Color]::Transparent)
-    Fill-Rounded $g ([Drawing.Color]::FromArgb(240, 30, 30, 30)) 0 0 $size $size ([Math]::Max(2, $size / 5))
+    Fill-Rounded $g ([Drawing.Color]::FromArgb(240, 30, 30, 30)) 0 0 $size $size ([Math]::Max(2.0, $size / 5))
 
     $color = $IconColors[$level]
-    $pad = [Math]::Max(2, [Math]::Round($size / 8))
-    $barH = [Math]::Max(2, [Math]::Round($size / 9))
+    $pad = [Math]::Max(2.0, [Math]::Round($size / 8))
+    $barH = [Math]::Max(2.0, [Math]::Round($size / 9))
     $barY = $size - $pad - $barH + 1
     $trackW = $size - 2 * $pad
     Fill-Rounded $g ([Drawing.Color]::FromArgb(80, 255, 255, 255)) $pad $barY $trackW $barH ($barH / 2)
     if ($fraction -gt 0) {
-        $fillW = [Math]::Max($barH, $trackW * [Math]::Min(1, $fraction))
+        $fillW = [Math]::Max($barH, $trackW * [Math]::Min(1.0, $fraction))
         Fill-Rounded $g $color $pad $barY $fillW $barH ($barH / 2)
     }
 
@@ -281,7 +281,7 @@ function Paint-Panel($g, $form) {
                 $barY = $y + 33 * $s; $barH = 6 * $s; $barW = $width - 2 * $padX
                 Fill-Rounded $g $t.track $padX $barY $barW $barH ($barH / 2)
                 if ($row.fraction -gt 0) {
-                    $fillW = [Math]::Max($barH, $barW * [Math]::Min(1, [double]$row.fraction))
+                    $fillW = [Math]::Max($barH, $barW * [Math]::Min(1.0, [double]$row.fraction))
                     Fill-Rounded $g $t[$row.level] $padX $barY $fillW $barH ($barH / 2)
                 }
             }

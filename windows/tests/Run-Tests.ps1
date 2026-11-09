@@ -79,7 +79,7 @@ function Compare-Values($actual, $expected, [string]$path) {
         $a = [double]$actual; $e = [double]$expected
         if ([double]::IsInfinity($e) -or [double]::IsInfinity($a)) {
             if ($a -eq $e) { return $null }
-        } elseif ([Math]::Abs($a - $e) -le 1e-9 * [Math]::Max(1, [Math]::Abs($e))) {
+        } elseif ([Math]::Abs($a - $e) -le 1e-9 * [Math]::Max(1.0, [Math]::Abs($e))) {
             return $null
         }
         return "${path}: attendu $e, obtenu $a"
