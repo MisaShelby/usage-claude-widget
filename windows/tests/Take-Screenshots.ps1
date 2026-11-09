@@ -109,6 +109,10 @@ function Stop-Widget($p) {
     Start-Sleep -Seconds 2
 }
 
+# Bureau dégagé : les autres fenêtres (console du runner…) ne gênent pas les captures.
+(New-Object -ComObject Shell.Application).MinimizeAll()
+Start-Sleep -Seconds 2
+
 $failed = $false
 try {
     # 1. Notification area + detail panel.

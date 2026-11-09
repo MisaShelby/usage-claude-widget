@@ -27,6 +27,7 @@ public static class ClaudeBudgetNative {
     [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
     [DllImport("user32.dll")] public static extern bool DestroyIcon(IntPtr hIcon);
     [DllImport("dwmapi.dll")] public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int value, int size);
+    [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hwnd, int cmd);
 }
 '@
 [void][ClaudeBudgetNative]::SetProcessDPIAware()
@@ -143,7 +144,7 @@ function New-TrayBitmap([string]$text, [double]$fraction, [string]$level) {
         Fill-Rounded $g $color $pad $barY $fillW $barH ($barH / 2)
     }
 
-    if ($text.Length -le 1) { $em = 0.66 } else { $em = 0.58 }
+    if ($text.Length -le 1) { $em = 0.74 } else { $em = 0.66 }
     $font = New-Object Drawing.Font('Segoe UI', [single]($size * $em), [Drawing.FontStyle]::Bold, [Drawing.GraphicsUnit]::Pixel)
     $format = New-Object Drawing.StringFormat
     $format.Alignment = [Drawing.StringAlignment]::Center
@@ -389,6 +390,7 @@ function Show-Panel {
     if (-not $script:KeepPanel) { $form.Add_Deactivate({ Close-Panel }) }
     $script:Panel = $form
     $form.Show()
+    [void][ClaudeBudgetNative]::ShowWindow($form.Handle, 9) # SW_RESTORE (voir Show-Week)
     Set-RoundCorners $form
     $form.Activate()
 }
@@ -643,6 +645,9 @@ function Show-Week {
     $form.Add_FormClosed({ $script:WeekForm = $null })
     $script:WeekForm = $form
     $form.Show()
+    # Lancé caché ou réduit (raccourci de démarrage), Windows applique cet état à la
+    # première fenêtre normale affichée : on la remet explicitement à l'écran.
+    [void][ClaudeBudgetNative]::ShowWindow($form.Handle, 9) # SW_RESTORE
     Set-DarkTitleBar $form
     $form.Activate()
 }
@@ -935,16 +940,16 @@ try {
     [void]$menu.Items.Add((New-Object Windows.Forms.ToolStripSeparator))
     [void]$menu.Items.Add((Tr 'quit'), $null, { Quit-App })
 
-    # Ajoutées de droite à gauche : la semaine d'abord, pour que le jour soit à gauche.
-    $script:WeekIcon = New-Object Windows.Forms.NotifyIcon
+    # Windows place à gauche la première icône affichée : le jour, puis la semaine.
     $script:DayIcon = New-Object Windows.Forms.NotifyIcon
+    $script:WeekIcon = New-Object Windows.Forms.NotifyIcon
     foreach ($icon in @($script:WeekIcon, $script:DayIcon)) {
         $icon.ContextMenuStrip = $menu
         $icon.Add_MouseClick({ param($src, $e) if ($e.Button -eq [Windows.Forms.MouseButtons]::Left) { Toggle-Panel } })
     }
     Update-Tray
-    $script:WeekIcon.Visible = $true
     $script:DayIcon.Visible = $true
+    $script:WeekIcon.Visible = $true
 
     $script:RefreshTimer = New-Object Windows.Forms.Timer
     $script:RefreshTimer.Interval = $REFRESH_MS
