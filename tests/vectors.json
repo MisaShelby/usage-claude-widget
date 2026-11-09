@@ -1,0 +1,1960 @@
+{
+ "timezone": "Europe/Paris",
+ "cases": [
+  {
+   "fn": "daysUntilReset",
+   "args": [
+    1793958600000,
+    1794319200000
+   ],
+   "expected": [
+    {
+     "key": "2026-11-06",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-07",
+     "weekend": true,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-08",
+     "weekend": true,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-09",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-10",
+     "weekend": false,
+     "weight": 0.625
+    }
+   ]
+  },
+  {
+   "fn": "daysUntilReset",
+   "args": [
+    1794321000000,
+    1794924000000
+   ],
+   "expected": [
+    {
+     "key": "2026-11-10",
+     "weekend": false,
+     "weight": 0.375
+    },
+    {
+     "key": "2026-11-11",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-12",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-13",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-14",
+     "weekend": true,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-15",
+     "weekend": true,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-16",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-11-17",
+     "weekend": false,
+     "weight": 0.625
+    }
+   ]
+  },
+  {
+   "fn": "daysUntilReset",
+   "args": [
+    1794297600000,
+    1794319200000
+   ],
+   "expected": [
+    {
+     "key": "2026-11-10",
+     "weekend": false,
+     "weight": 0.625
+    }
+   ]
+  },
+  {
+   "fn": "daysUntilReset",
+   "args": [
+    1792562400000,
+    1793109600000
+   ],
+   "expected": [
+    {
+     "key": "2026-10-21",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-10-22",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-10-23",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-10-24",
+     "weekend": true,
+     "weight": 1
+    },
+    {
+     "key": "2026-10-25",
+     "weekend": true,
+     "weight": 1
+    },
+    {
+     "key": "2026-10-26",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-10-27",
+     "weekend": false,
+     "weight": 0.625
+    }
+   ]
+  },
+  {
+   "fn": "daysUntilReset",
+   "args": [
+    1792967400000,
+    1793109600000
+   ],
+   "expected": [
+    {
+     "key": "2026-10-25",
+     "weekend": true,
+     "weight": 1
+    },
+    {
+     "key": "2026-10-26",
+     "weekend": false,
+     "weight": 1
+    },
+    {
+     "key": "2026-10-27",
+     "weekend": false,
+     "weight": 0.625
+    }
+   ]
+  },
+  {
+   "fn": "allocate",
+   "args": [
+    60,
+    [
+     {
+      "key": "2026-11-06",
+      "weekend": false,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-07",
+      "weekend": true,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-08",
+      "weekend": true,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-09",
+      "weekend": false,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-10",
+      "weekend": false,
+      "weight": 0.625
+     }
+    ]
+   ],
+   "expected": [
+    19.047619047619047,
+    5,
+    5,
+    19.047619047619047,
+    11.904761904761905
+   ]
+  },
+  {
+   "fn": "allocate",
+   "args": [
+    6,
+    [
+     {
+      "key": "2026-11-06",
+      "weekend": false,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-07",
+      "weekend": true,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-08",
+      "weekend": true,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-09",
+      "weekend": false,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-10",
+      "weekend": false,
+      "weight": 0.625
+     }
+    ]
+   ],
+   "expected": [
+    0,
+    3,
+    3,
+    0,
+    0
+   ]
+  },
+  {
+   "fn": "allocate",
+   "args": [
+    40,
+    [
+     {
+      "key": "2026-11-07",
+      "weekend": true,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-08",
+      "weekend": true,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-09",
+      "weekend": false,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-10",
+      "weekend": false,
+      "weight": 0.625
+     }
+    ]
+   ],
+   "expected": [
+    5,
+    5,
+    18.46153846153846,
+    11.538461538461538
+   ]
+  },
+  {
+   "fn": "allocate",
+   "args": [
+    30,
+    [
+     {
+      "key": "2026-11-08",
+      "weekend": true,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-09",
+      "weekend": false,
+      "weight": 0.625
+     }
+    ]
+   ],
+   "expected": [
+    5,
+    25
+   ]
+  },
+  {
+   "fn": "allocate",
+   "args": [
+    -5,
+    [
+     {
+      "key": "2026-11-06",
+      "weekend": false,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-07",
+      "weekend": true,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-08",
+      "weekend": true,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-09",
+      "weekend": false,
+      "weight": 1
+     },
+     {
+      "key": "2026-11-10",
+      "weekend": false,
+      "weight": 0.625
+     }
+    ]
+   ],
+   "expected": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "fn": "computeStatus",
+   "args": [
+    {
+     "utilization": 49,
+     "dayStartUtil": 49,
+     "resetAt": 1794319200000,
+     "now": 1794221400000
+    }
+   ],
+   "expected": {
+    "todayBudget": 31.384615384615383,
+    "usedToday": 0,
+    "progress": 0,
+    "upcoming": [
+     {
+      "key": "2026-11-10",
+      "weekend": false,
+      "weight": 0.625,
+      "budget": 19.615384615384617
+     }
+    ],
+    "today": {
+     "key": "2026-11-09",
+     "weekend": false,
+     "weight": 1
+    }
+   }
+  },
+  {
+   "fn": "computeStatus",
+   "args": [
+    {
+     "utilization": 60,
+     "dayStartUtil": 49,
+     "resetAt": 1794319200000,
+     "now": 1794243600000
+    }
+   ],
+   "expected": {
+    "todayBudget": 31.384615384615383,
+    "usedToday": 11,
+    "progress": 35.04901960784314,
+    "upcoming": [
+     {
+      "key": "2026-11-10",
+      "weekend": false,
+      "weight": 0.625,
+      "budget": 19.615384615384617
+     }
+    ],
+    "today": {
+     "key": "2026-11-09",
+     "weekend": false,
+     "weight": 1
+    }
+   }
+  },
+  {
+   "fn": "computeStatus",
+   "args": [
+    {
+     "utilization": 95,
+     "dayStartUtil": 49,
+     "resetAt": 1794319200000,
+     "now": 1794258000000
+    }
+   ],
+   "expected": {
+    "todayBudget": 31.384615384615383,
+    "usedToday": 46,
+    "progress": 146.56862745098042,
+    "upcoming": [
+     {
+      "key": "2026-11-10",
+      "weekend": false,
+      "weight": 0.625,
+      "budget": 5
+     }
+    ],
+    "today": {
+     "key": "2026-11-09",
+     "weekend": false,
+     "weight": 1
+    }
+   }
+  },
+  {
+   "fn": "computeStatus",
+   "args": [
+    {
+     "utilization": 43,
+     "dayStartUtil": 40,
+     "resetAt": 1794319200000,
+     "now": 1793958600000
+    }
+   ],
+   "expected": {
+    "todayBudget": 19.047619047619047,
+    "usedToday": 3,
+    "progress": 15.75,
+    "upcoming": [
+     {
+      "key": "2026-11-07",
+      "weekend": true,
+      "weight": 1,
+      "budget": 5
+     },
+     {
+      "key": "2026-11-08",
+      "weekend": true,
+      "weight": 1,
+      "budget": 5
+     },
+     {
+      "key": "2026-11-09",
+      "weekend": false,
+      "weight": 1,
+      "budget": 19.047619047619044
+     },
+     {
+      "key": "2026-11-10",
+      "weekend": false,
+      "weight": 0.625,
+      "budget": 11.904761904761905
+     }
+    ],
+    "today": {
+     "key": "2026-11-06",
+     "weekend": false,
+     "weight": 1
+    }
+   }
+  },
+  {
+   "fn": "computeStatus",
+   "args": [
+    {
+     "utilization": 20,
+     "dayStartUtil": 10,
+     "resetAt": 1794319200000,
+     "now": 1794049200000
+    }
+   ],
+   "expected": {
+    "todayBudget": 5,
+    "usedToday": 10,
+    "progress": 200,
+    "upcoming": [
+     {
+      "key": "2026-11-08",
+      "weekend": true,
+      "weight": 1,
+      "budget": 5
+     },
+     {
+      "key": "2026-11-09",
+      "weekend": false,
+      "weight": 1,
+      "budget": 46.15384615384615
+     },
+     {
+      "key": "2026-11-10",
+      "weekend": false,
+      "weight": 0.625,
+      "budget": 28.846153846153847
+     }
+    ],
+    "today": {
+     "key": "2026-11-07",
+     "weekend": true,
+     "weight": 1
+    }
+   }
+  },
+  {
+   "fn": "computeStatus",
+   "args": [
+    {
+     "utilization": 100,
+     "dayStartUtil": 98,
+     "resetAt": 1794319200000,
+     "now": 1794315600000
+    }
+   ],
+   "expected": {
+    "todayBudget": 2,
+    "usedToday": 2,
+    "progress": 100,
+    "upcoming": [],
+    "today": {
+     "key": "2026-11-10",
+     "weekend": false,
+     "weight": 0.625
+    }
+   }
+  },
+  {
+   "fn": "computeStatus",
+   "args": [
+    {
+     "utilization": 70,
+     "dayStartUtil": 70,
+     "resetAt": 1794319200000,
+     "now": 1794319140000
+    }
+   ],
+   "expected": {
+    "todayBudget": 30,
+    "usedToday": 0,
+    "progress": 0,
+    "upcoming": [],
+    "today": {
+     "key": "2026-11-10",
+     "weekend": false,
+     "weight": 0.625
+    }
+   }
+  },
+  {
+   "fn": "computeStatus",
+   "args": [
+    {
+     "utilization": 30,
+     "dayStartUtil": 22,
+     "resetAt": 1793109600000,
+     "now": 1792836000000
+    }
+   ],
+   "expected": {
+    "todayBudget": 5,
+    "usedToday": 8,
+    "progress": 160,
+    "upcoming": [
+     {
+      "key": "2026-10-25",
+      "weekend": true,
+      "weight": 1,
+      "budget": 5
+     },
+     {
+      "key": "2026-10-26",
+      "weekend": false,
+      "weight": 1,
+      "budget": 40
+     },
+     {
+      "key": "2026-10-27",
+      "weekend": false,
+      "weight": 0.625,
+      "budget": 25
+     }
+    ],
+    "today": {
+     "key": "2026-10-24",
+     "weekend": true,
+     "weight": 1
+    }
+   }
+  },
+  {
+   "fn": "checkThresholds",
+   "args": [
+    30,
+    []
+   ],
+   "expected": {
+    "level": 25,
+    "notified": [
+     25
+    ]
+   }
+  },
+  {
+   "fn": "checkThresholds",
+   "args": [
+    30,
+    [
+     25
+    ]
+   ],
+   "expected": {
+    "level": null,
+    "notified": [
+     25
+    ]
+   }
+  },
+  {
+   "fn": "checkThresholds",
+   "args": [
+    80,
+    [
+     25
+    ]
+   ],
+   "expected": {
+    "level": 75,
+    "notified": [
+     25,
+     50,
+     75
+    ]
+   }
+  },
+  {
+   "fn": "checkThresholds",
+   "args": [
+    100,
+    [
+     25,
+     50,
+     75
+    ]
+   ],
+   "expected": {
+    "level": 100,
+    "notified": [
+     25,
+     50,
+     75,
+     100
+    ]
+   }
+  },
+  {
+   "fn": "checkThresholds",
+   "args": [
+    120,
+    []
+   ],
+   "expected": {
+    "level": "over",
+    "notified": [
+     25,
+     50,
+     75,
+     100,
+     "over"
+    ]
+   }
+  },
+  {
+   "fn": "checkThresholds",
+   "args": [
+    "Infinity",
+    [
+     25,
+     50,
+     75,
+     100
+    ]
+   ],
+   "expected": {
+    "level": "over",
+    "notified": [
+     25,
+     50,
+     75,
+     100,
+     "over"
+    ]
+   }
+  },
+  {
+   "fn": "rollDayState",
+   "args": [
+    null,
+    {
+     "utilization": 42,
+     "resetAt": 1794319200000,
+     "now": 1793958600000
+    }
+   ],
+   "expected": {
+    "dayKey": "2026-11-06",
+    "resetAt": 1794319200000,
+    "dayStartUtil": 42,
+    "notified": [],
+    "history": {}
+   }
+  },
+  {
+   "fn": "rollDayState",
+   "args": [
+    {
+     "dayKey": "2026-11-09",
+     "resetAt": 1794319200000,
+     "dayStartUtil": 49,
+     "notified": [
+      25
+     ],
+     "history": {
+      "2026-11-04": {
+       "budget": 15,
+       "start": 0,
+       "used": 9
+      },
+      "2026-11-05": {
+       "budget": 15.6,
+       "start": 9,
+       "used": 17.5
+      },
+      "2026-11-06": {
+       "budget": 17.9,
+       "start": 26.5,
+       "used": 12
+      }
+     }
+    },
+    {
+     "utilization": 52,
+     "resetAt": 1794319200000,
+     "now": 1794250800000
+    }
+   ],
+   "expected": {
+    "dayKey": "2026-11-09",
+    "resetAt": 1794319200000,
+    "dayStartUtil": 49,
+    "notified": [
+     25
+    ],
+    "history": {
+     "2026-11-04": {
+      "budget": 15,
+      "start": 0,
+      "used": 9
+     },
+     "2026-11-05": {
+      "budget": 15.6,
+      "start": 9,
+      "used": 17.5
+     },
+     "2026-11-06": {
+      "budget": 17.9,
+      "start": 26.5,
+      "used": 12
+     }
+    }
+   }
+  },
+  {
+   "fn": "rollDayState",
+   "args": [
+    {
+     "dayKey": "2026-11-09",
+     "resetAt": 1794319200000,
+     "dayStartUtil": 49,
+     "notified": [
+      25
+     ],
+     "history": {
+      "2026-11-04": {
+       "budget": 15,
+       "start": 0,
+       "used": 9
+      },
+      "2026-11-05": {
+       "budget": 15.6,
+       "start": 9,
+       "used": 17.5
+      },
+      "2026-11-06": {
+       "budget": 17.9,
+       "start": 26.5,
+       "used": 12
+      }
+     }
+    },
+    {
+     "utilization": 55,
+     "resetAt": 1794319200000,
+     "now": 1794294000000
+    }
+   ],
+   "expected": {
+    "dayKey": "2026-11-10",
+    "resetAt": 1794319200000,
+    "dayStartUtil": 55,
+    "notified": [],
+    "history": {
+     "2026-11-04": {
+      "budget": 15,
+      "start": 0,
+      "used": 9
+     },
+     "2026-11-05": {
+      "budget": 15.6,
+      "start": 9,
+      "used": 17.5
+     },
+     "2026-11-06": {
+      "budget": 17.9,
+      "start": 26.5,
+      "used": 12
+     }
+    }
+   }
+  },
+  {
+   "fn": "rollDayState",
+   "args": [
+    {
+     "dayKey": "2026-11-09",
+     "resetAt": 1794319200000,
+     "dayStartUtil": 49,
+     "notified": [
+      25
+     ],
+     "history": {
+      "2026-11-04": {
+       "budget": 15,
+       "start": 0,
+       "used": 9
+      },
+      "2026-11-05": {
+       "budget": 15.6,
+       "start": 9,
+       "used": 17.5
+      },
+      "2026-11-06": {
+       "budget": 17.9,
+       "start": 26.5,
+       "used": 12
+      }
+     }
+    },
+    {
+     "utilization": 1,
+     "resetAt": 1794924000000,
+     "now": 1794319500000
+    }
+   ],
+   "expected": {
+    "dayKey": "2026-11-10",
+    "resetAt": 1794924000000,
+    "dayStartUtil": 1,
+    "notified": [],
+    "history": {}
+   }
+  },
+  {
+   "fn": "rollDayState",
+   "args": [
+    {
+     "dayKey": "2026-11-09",
+     "resetAt": 1794319260000,
+     "dayStartUtil": 49,
+     "notified": [
+      25
+     ],
+     "history": {
+      "2026-11-04": {
+       "budget": 15,
+       "start": 0,
+       "used": 9
+      },
+      "2026-11-05": {
+       "budget": 15.6,
+       "start": 9,
+       "used": 17.5
+      },
+      "2026-11-06": {
+       "budget": 17.9,
+       "start": 26.5,
+       "used": 12
+      }
+     }
+    },
+    {
+     "utilization": 50,
+     "resetAt": 1794319200000,
+     "now": 1794222000000
+    }
+   ],
+   "expected": {
+    "dayKey": "2026-11-09",
+    "resetAt": 1794319200000,
+    "dayStartUtil": 49,
+    "notified": [
+     25
+    ],
+    "history": {
+     "2026-11-04": {
+      "budget": 15,
+      "start": 0,
+      "used": 9
+     },
+     "2026-11-05": {
+      "budget": 15.6,
+      "start": 9,
+      "used": 17.5
+     },
+     "2026-11-06": {
+      "budget": 17.9,
+      "start": 26.5,
+      "used": 12
+     }
+    }
+   }
+  },
+  {
+   "fn": "recordDay",
+   "args": [
+    {
+     "dayKey": "2026-11-09",
+     "resetAt": 1794319200000,
+     "dayStartUtil": 49,
+     "notified": [
+      25
+     ],
+     "history": {
+      "2026-11-04": {
+       "budget": 15,
+       "start": 0,
+       "used": 9
+      },
+      "2026-11-05": {
+       "budget": 15.6,
+       "start": 9,
+       "used": 17.5
+      },
+      "2026-11-06": {
+       "budget": 17.9,
+       "start": 26.5,
+       "used": 12
+      }
+     }
+    },
+    {
+     "todayBudget": 31.4,
+     "usedToday": 2
+    }
+   ],
+   "expected": {
+    "dayKey": "2026-11-09",
+    "resetAt": 1794319200000,
+    "dayStartUtil": 49,
+    "notified": [
+     25
+    ],
+    "history": {
+     "2026-11-04": {
+      "budget": 15,
+      "start": 0,
+      "used": 9
+     },
+     "2026-11-05": {
+      "budget": 15.6,
+      "start": 9,
+      "used": 17.5
+     },
+     "2026-11-06": {
+      "budget": 17.9,
+      "start": 26.5,
+      "used": 12
+     },
+     "2026-11-09": {
+      "budget": 31.4,
+      "start": 49,
+      "used": 2
+     }
+    }
+   }
+  },
+  {
+   "fn": "recordDay",
+   "args": [
+    {
+     "dayKey": "2026-11-06",
+     "resetAt": 1794319200000,
+     "dayStartUtil": 43,
+     "notified": []
+    },
+    {
+     "todayBudget": 17.9,
+     "usedToday": 5
+    }
+   ],
+   "expected": {
+    "dayKey": "2026-11-06",
+    "resetAt": 1794319200000,
+    "dayStartUtil": 43,
+    "notified": [],
+    "history": {
+     "2026-11-06": {
+      "budget": 17.9,
+      "start": 43,
+      "used": 5
+     }
+    }
+   }
+  },
+  {
+   "fn": "weekChart",
+   "args": [
+    {
+     "state": {
+      "dayKey": "2026-11-09",
+      "resetAt": 1794319200000,
+      "dayStartUtil": 49,
+      "notified": [
+       25
+      ],
+      "history": {
+       "2026-11-04": {
+        "budget": 15,
+        "start": 0,
+        "used": 9
+       },
+       "2026-11-05": {
+        "budget": 15.6,
+        "start": 9,
+        "used": 17.5
+       },
+       "2026-11-06": {
+        "budget": 17.9,
+        "start": 26.5,
+        "used": 12
+       }
+      }
+     },
+     "status": {
+      "todayBudget": 31.384615384615383,
+      "usedToday": 3,
+      "progress": 9.558823529411766,
+      "upcoming": [
+       {
+        "key": "2026-11-10",
+        "weekend": false,
+        "weight": 0.625,
+        "budget": 19.615384615384617
+       }
+      ],
+      "today": {
+       "key": "2026-11-09",
+       "weekend": false,
+       "weight": 1
+      }
+     },
+     "resetAt": 1794319200000
+    }
+   ],
+   "expected": {
+    "days": [
+     {
+      "key": "2026-11-03",
+      "weight": 0.375,
+      "weekend": false,
+      "kind": "gap",
+      "budget": null,
+      "used": null
+     },
+     {
+      "key": "2026-11-04",
+      "weight": 1,
+      "weekend": false,
+      "kind": "past",
+      "budget": 15,
+      "used": 9
+     },
+     {
+      "key": "2026-11-05",
+      "weight": 1,
+      "weekend": false,
+      "kind": "past",
+      "budget": 15.6,
+      "used": 17.5
+     },
+     {
+      "key": "2026-11-06",
+      "weight": 1,
+      "weekend": false,
+      "kind": "past",
+      "budget": 17.9,
+      "used": 12
+     },
+     {
+      "key": "2026-11-07",
+      "weight": 1,
+      "weekend": true,
+      "kind": "gap",
+      "budget": null,
+      "used": null
+     },
+     {
+      "key": "2026-11-08",
+      "weight": 1,
+      "weekend": true,
+      "kind": "gap",
+      "budget": null,
+      "used": null
+     },
+     {
+      "key": "2026-11-09",
+      "weight": 1,
+      "weekend": false,
+      "kind": "today",
+      "budget": 31.384615384615383,
+      "used": 3
+     },
+     {
+      "key": "2026-11-10",
+      "weight": 0.625,
+      "weekend": false,
+      "kind": "future",
+      "budget": 19.615384615384617,
+      "used": null
+     }
+    ],
+    "gaps": [
+     {
+      "from": 0,
+      "to": 0,
+      "total": 0
+     },
+     {
+      "from": 4,
+      "to": 5,
+      "total": 10.5
+     }
+    ]
+   }
+  },
+  {
+   "fn": "weekChart",
+   "args": [
+    {
+     "state": {
+      "dayKey": "2026-11-09",
+      "resetAt": 1794319200000,
+      "dayStartUtil": 49,
+      "notified": [
+       25
+      ],
+      "history": {
+       "2026-11-05": {
+        "budget": 15.6,
+        "start": 9,
+        "used": 17.5
+       }
+      }
+     },
+     "status": {
+      "todayBudget": 31.384615384615383,
+      "usedToday": 3,
+      "progress": 9.558823529411766,
+      "upcoming": [
+       {
+        "key": "2026-11-10",
+        "weekend": false,
+        "weight": 0.625,
+        "budget": 19.615384615384617
+       }
+      ],
+      "today": {
+       "key": "2026-11-09",
+       "weekend": false,
+       "weight": 1
+      }
+     },
+     "resetAt": 1794319200000
+    }
+   ],
+   "expected": {
+    "days": [
+     {
+      "key": "2026-11-03",
+      "weight": 0.375,
+      "weekend": false,
+      "kind": "gap",
+      "budget": null,
+      "used": null
+     },
+     {
+      "key": "2026-11-04",
+      "weight": 1,
+      "weekend": false,
+      "kind": "gap",
+      "budget": null,
+      "used": null
+     },
+     {
+      "key": "2026-11-05",
+      "weight": 1,
+      "weekend": false,
+      "kind": "past",
+      "budget": 15.6,
+      "used": 17.5
+     },
+     {
+      "key": "2026-11-06",
+      "weight": 1,
+      "weekend": false,
+      "kind": "gap",
+      "budget": null,
+      "used": null
+     },
+     {
+      "key": "2026-11-07",
+      "weight": 1,
+      "weekend": true,
+      "kind": "gap",
+      "budget": null,
+      "used": null
+     },
+     {
+      "key": "2026-11-08",
+      "weight": 1,
+      "weekend": true,
+      "kind": "gap",
+      "budget": null,
+      "used": null
+     },
+     {
+      "key": "2026-11-09",
+      "weight": 1,
+      "weekend": false,
+      "kind": "today",
+      "budget": 31.384615384615383,
+      "used": 3
+     },
+     {
+      "key": "2026-11-10",
+      "weight": 0.625,
+      "weekend": false,
+      "kind": "future",
+      "budget": 19.615384615384617,
+      "used": null
+     }
+    ],
+    "gaps": [
+     {
+      "from": 0,
+      "to": 1,
+      "total": 9
+     },
+     {
+      "from": 3,
+      "to": 5,
+      "total": 22.5
+     }
+    ]
+   }
+  },
+  {
+   "fn": "chartScale",
+   "args": [
+    0
+   ],
+   "expected": {
+    "max": 5,
+    "step": 5
+   }
+  },
+  {
+   "fn": "chartScale",
+   "args": [
+    -3
+   ],
+   "expected": {
+    "max": 5,
+    "step": 5
+   }
+  },
+  {
+   "fn": "chartScale",
+   "args": [
+    3
+   ],
+   "expected": {
+    "max": 3,
+    "step": 1
+   }
+  },
+  {
+   "fn": "chartScale",
+   "args": [
+    9.5
+   ],
+   "expected": {
+    "max": 10,
+    "step": 2.5
+   }
+  },
+  {
+   "fn": "chartScale",
+   "args": [
+    17.9
+   ],
+   "expected": {
+    "max": 20,
+    "step": 5
+   }
+  },
+  {
+   "fn": "chartScale",
+   "args": [
+    31.4
+   ],
+   "expected": {
+    "max": 40,
+    "step": 10
+   }
+  },
+  {
+   "fn": "chartScale",
+   "args": [
+    47
+   ],
+   "expected": {
+    "max": 60,
+    "step": 20
+   }
+  },
+  {
+   "fn": "chartScale",
+   "args": [
+    100
+   ],
+   "expected": {
+    "max": 100,
+    "step": 25
+   }
+  },
+  {
+   "fn": "barLevel",
+   "args": [
+    0
+   ],
+   "expected": "green"
+  },
+  {
+   "fn": "barLevel",
+   "args": [
+    49.9
+   ],
+   "expected": "green"
+  },
+  {
+   "fn": "barLevel",
+   "args": [
+    50
+   ],
+   "expected": "orange"
+  },
+  {
+   "fn": "barLevel",
+   "args": [
+    74.9
+   ],
+   "expected": "orange"
+  },
+  {
+   "fn": "barLevel",
+   "args": [
+    75
+   ],
+   "expected": "red"
+  },
+  {
+   "fn": "barLevel",
+   "args": [
+    120
+   ],
+   "expected": "red"
+  },
+  {
+   "fn": "barLevel",
+   "args": [
+    "Infinity"
+   ],
+   "expected": "red"
+  },
+  {
+   "fn": "barFraction",
+   "args": [
+    0
+   ],
+   "expected": 0
+  },
+  {
+   "fn": "barFraction",
+   "args": [
+    42
+   ],
+   "expected": 0.42
+  },
+  {
+   "fn": "barFraction",
+   "args": [
+    100
+   ],
+   "expected": 1
+  },
+  {
+   "fn": "barFraction",
+   "args": [
+    140
+   ],
+   "expected": 1
+  },
+  {
+   "fn": "barFraction",
+   "args": [
+    "Infinity"
+   ],
+   "expected": 1
+  },
+  {
+   "fn": "weekElapsed",
+   "args": [
+    1794221400000,
+    1794319200000
+   ],
+   "expected": 0.8382936507936508
+  },
+  {
+   "fn": "weekElapsed",
+   "args": [
+    1793487600000,
+    1794319200000
+   ],
+   "expected": 0
+  },
+  {
+   "fn": "planFractions",
+   "args": [
+    20,
+    [
+     {
+      "budget": 10
+     },
+     {
+      "budget": 25
+     },
+     {
+      "budget": 5
+     }
+    ]
+   ],
+   "expected": [
+    0.4,
+    1,
+    0.2
+   ]
+  },
+  {
+   "fn": "planFractions",
+   "args": [
+    0,
+    []
+   ],
+   "expected": []
+  },
+  {
+   "fn": "normalizeReset",
+   "args": [
+    "2026-11-10T13:59:59.690856+00:00"
+   ],
+   "expected": 1794319200000
+  },
+  {
+   "fn": "normalizeReset",
+   "args": [
+    "2026-11-10T14:00:29+00:00"
+   ],
+   "expected": 1794319200000
+  },
+  {
+   "fn": "localKey",
+   "args": [
+    1794265140000
+   ],
+   "expected": "2026-11-09"
+  },
+  {
+   "fn": "localKey",
+   "args": [
+    1794265200000
+   ],
+   "expected": "2026-11-10"
+  },
+  {
+   "fn": "parseUsageText",
+   "args": [
+    "You are currently using your subscription to power your Claude Code usage\n\nCurrent session: 2% used · resets Nov 9, 1:10pm (Europe/Paris)\nCurrent week (all models): 49% used · resets Nov 10, 3pm (Europe/Paris)\n",
+    1794221400000
+   ],
+   "expected": {
+    "utilization": 49,
+    "session": 2,
+    "resetAt": 1794319200000
+   }
+  },
+  {
+   "fn": "parseUsageText",
+   "args": [
+    "Current week (all models): 48.5% used · resets Nov 10, 2:59pm (Europe/Paris)",
+    1794221400000
+   ],
+   "expected": {
+    "utilization": 48.5,
+    "session": null,
+    "resetAt": 1794319200000
+   }
+  },
+  {
+   "fn": "parseUsageText",
+   "args": [
+    "Current week (all models): 10% used · resets Nov 10, 12:00 PM",
+    1794221400000
+   ],
+   "expected": {
+    "utilization": 10,
+    "session": null,
+    "resetAt": 1794308400000
+   }
+  },
+  {
+   "fn": "parseUsageText",
+   "args": [
+    "Current week (all models): 10% used · resets Nov 10, 12am",
+    1794221400000
+   ],
+   "expected": {
+    "utilization": 10,
+    "session": null,
+    "resetAt": 1794265200000
+   }
+  },
+  {
+   "fn": "parseUsageText",
+   "args": [
+    "Current week (all models): 30% used · resets Jan 2, 3pm (Europe/Paris)",
+    1798534800000
+   ],
+   "expected": {
+    "utilization": 30,
+    "session": null,
+    "resetAt": 1798898400000
+   }
+  },
+  {
+   "fn": "parseUsageText",
+   "args": [
+    "Current week (all models): 30% used · resets soon",
+    1794221400000
+   ],
+   "expected": {
+    "utilization": 30,
+    "session": null,
+    "resetAt": null
+   }
+  },
+  {
+   "fn": "parseUsageText",
+   "args": [
+    "Error: not logged in",
+    1794221400000
+   ],
+   "expected": null
+  },
+  {
+   "fn": "parseUsageText",
+   "args": [
+    "Current week (all models): 140% used",
+    1794221400000
+   ],
+   "expected": null
+  },
+  {
+   "fn": "parseUsageText",
+   "args": [
+    "Current week (all models): 12% used · resets Oct 27, 3pm",
+    1792836000000
+   ],
+   "expected": {
+    "utilization": 12,
+    "session": null,
+    "resetAt": 1793109600000
+   }
+  },
+  {
+   "fn": "pickReset",
+   "args": [
+    1794319200000,
+    1794319500000,
+    1794221400000
+   ],
+   "expected": 1794319200000
+  },
+  {
+   "fn": "pickReset",
+   "args": [
+    1794319200000,
+    1794924000000,
+    1794319500000
+   ],
+   "expected": 1794924000000
+  },
+  {
+   "fn": "pickReset",
+   "args": [
+    1794319200000,
+    null,
+    1794221400000
+   ],
+   "expected": 1794319200000
+  },
+  {
+   "fn": "pickReset",
+   "args": [
+    1794319200000,
+    null,
+    1794319500000
+   ],
+   "expected": null
+  },
+  {
+   "fn": "pickReset",
+   "args": [
+    null,
+    null,
+    1794221400000
+   ],
+   "expected": null
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    0,
+    "fr"
+   ],
+   "expected": "0"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    5,
+    "fr"
+   ],
+   "expected": "5"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    18.2857,
+    "fr"
+   ],
+   "expected": "18,3"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    0.04,
+    "fr"
+   ],
+   "expected": "0"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    99.95,
+    "fr"
+   ],
+   "expected": "100"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    -0.04,
+    "fr"
+   ],
+   "expected": "0"
+  },
+  {
+   "fn": "pctText",
+   "args": [
+    18.2857,
+    "fr"
+   ],
+   "expected": "18,3 %"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    0,
+    "fr"
+   ],
+   "expected": "0 %"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    62.4,
+    "fr"
+   ],
+   "expected": "62 %"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    62.5,
+    "fr"
+   ],
+   "expected": "63 %"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    100,
+    "fr"
+   ],
+   "expected": "100 %"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    "Infinity",
+    "fr"
+   ],
+   "expected": "dépassé"
+  },
+  {
+   "fn": "dayLabel",
+   "args": [
+    "2026-11-07",
+    "fr"
+   ],
+   "expected": "sam. 7"
+  },
+  {
+   "fn": "dayLabel",
+   "args": [
+    "2026-11-08",
+    "fr"
+   ],
+   "expected": "dim. 8"
+  },
+  {
+   "fn": "dayLabel",
+   "args": [
+    "2026-11-10",
+    "fr"
+   ],
+   "expected": "mar. 10"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    0,
+    "en"
+   ],
+   "expected": "0"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    5,
+    "en"
+   ],
+   "expected": "5"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    18.2857,
+    "en"
+   ],
+   "expected": "18.3"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    0.04,
+    "en"
+   ],
+   "expected": "0"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    99.95,
+    "en"
+   ],
+   "expected": "100"
+  },
+  {
+   "fn": "fmtPct",
+   "args": [
+    -0.04,
+    "en"
+   ],
+   "expected": "0"
+  },
+  {
+   "fn": "pctText",
+   "args": [
+    18.2857,
+    "en"
+   ],
+   "expected": "18.3%"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    0,
+    "en"
+   ],
+   "expected": "0%"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    62.4,
+    "en"
+   ],
+   "expected": "62%"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    62.5,
+    "en"
+   ],
+   "expected": "63%"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    100,
+    "en"
+   ],
+   "expected": "100%"
+  },
+  {
+   "fn": "progressText",
+   "args": [
+    "Infinity",
+    "en"
+   ],
+   "expected": "over"
+  },
+  {
+   "fn": "dayLabel",
+   "args": [
+    "2026-11-07",
+    "en"
+   ],
+   "expected": "Sat 7"
+  },
+  {
+   "fn": "dayLabel",
+   "args": [
+    "2026-11-08",
+    "en"
+   ],
+   "expected": "Sun 8"
+  },
+  {
+   "fn": "dayLabel",
+   "args": [
+    "2026-11-10",
+    "en"
+   ],
+   "expected": "Tue 10"
+  },
+  {
+   "fn": "pickLang",
+   "args": [
+    [
+     "fr_FR.UTF-8",
+     "fr"
+    ]
+   ],
+   "expected": "fr"
+  },
+  {
+   "fn": "pickLang",
+   "args": [
+    [
+     "en_US"
+    ]
+   ],
+   "expected": "en"
+  },
+  {
+   "fn": "pickLang",
+   "args": [
+    [
+     "de_DE",
+     "fr"
+    ]
+   ],
+   "expected": "fr"
+  },
+  {
+   "fn": "pickLang",
+   "args": [
+    [
+     "fy_NL"
+    ]
+   ],
+   "expected": "en"
+  },
+  {
+   "fn": "pickLang",
+   "args": [
+    []
+   ],
+   "expected": "en"
+  }
+ ]
+}

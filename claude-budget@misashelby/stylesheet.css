@@ -1,0 +1,113 @@
+/* Barre du haut : barre qui se remplit (depuis la gauche) jusqu'au budget du jour,
+   puis le % du budget. Le remplissage prend les couleurs .claude-budget-line-*. */
+.claude-budget-track {
+  width: 64px;
+  height: 6px;
+  border-radius: 3px;
+  margin-left: 6px;
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.claude-budget-label {
+  padding-left: 6px;
+  font-feature-settings: "tnum";
+}
+
+/* Couleur du % : vert < 50 %, orange 50-75 %, rouge ≥ 75 % (comme la barre). */
+.claude-budget-green .claude-budget-label {
+  color: #33d17a;
+}
+
+.claude-budget-orange .claude-budget-label {
+  color: #ff7800;
+}
+
+.claude-budget-red .claude-budget-label {
+  color: #ed333b;
+  font-weight: bold;
+}
+
+/* « ·  sem. 49 % » après le % du jour : usage de la semaine, même règle de couleur. */
+.claude-budget-week-key {
+  padding-left: 6px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.claude-budget-week-label {
+  padding-left: 4px;
+  font-feature-settings: "tnum";
+}
+
+.claude-budget-week-green {
+  color: #33d17a;
+}
+
+.claude-budget-week-orange {
+  color: #ff7800;
+}
+
+.claude-budget-week-red {
+  color: #ed333b;
+  font-weight: bold;
+}
+
+/* Menu */
+.claude-budget-key {
+  padding-right: 24px;
+}
+
+.claude-budget-value {
+  font-feature-settings: "tnum";
+  font-weight: bold;
+}
+
+/* Menu : chaque ligne = libellé + valeur, puis une barre de progression. */
+.claude-budget-bar-item {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.claude-budget-row {
+  spacing: 5px;
+  min-width: 320px;
+}
+
+.claude-budget-line {
+  height: 6px;
+  border-radius: 3px;
+  background-color: rgba(127, 127, 127, 0.25);
+}
+
+.claude-budget-line-fill {
+  border-radius: 3px;
+}
+
+/* vert < 50 %, orange 50-75 %, rouge ≥ 75 % (barre du haut et barres du menu) */
+.claude-budget-line-green {
+  background-color: #33d17a;
+}
+
+.claude-budget-line-orange {
+  background-color: #ff7800;
+}
+
+.claude-budget-line-red {
+  background-color: #ed333b;
+}
+
+/* temps écoulé avant la remise à zéro */
+.claude-budget-line-time {
+  background-color: rgba(127, 127, 127, 0.75);
+}
+
+/* Fenêtre « usage de la semaine » */
+.claude-budget-chart {
+  width: 660px;
+  height: 320px;
+}
+
+.claude-budget-chart-footer {
+  font-size: 0.85em;
+  padding-top: 6px;
+  color: rgba(127, 127, 127, 1);
+}

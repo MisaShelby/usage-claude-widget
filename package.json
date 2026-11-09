@@ -1,0 +1,12 @@
+{
+  "name": "usage-claude-widget",
+  "private": true,
+  "description": "Daily budget of your weekly Claude limit, in the GNOME top bar and the Windows notification area",
+  "license": "MIT",
+  "repository": "github:MisaShelby/usage-claude-widget",
+  "type": "module",
+  "scripts": {
+    "test": "TZ=Europe/Paris node --test tests/*.test.js",
+    "vectors": "TZ=Europe/Paris node tests/make-vectors.js > tests/vectors.json"
+  }
+}

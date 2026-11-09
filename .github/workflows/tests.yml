@@ -1,0 +1,66 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  gnome:
+    name: GNOME extension (node)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+
+  windows:
+    name: Windows widget (PowerShell 5.1)
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use the Paris time zone (reference cases)
+        run: tzutil /s "Romance Standard Time"
+      - name: Parse every script
+        shell: powershell
+        run: .\windows\tests\Parse-Scripts.ps1
+      - name: Same results as the GNOME version
+        shell: powershell
+        run: .\windows\tests\Run-Tests.ps1
+      - name: Demo mode runs
+        shell: powershell
+        run: .\windows\tests\Smoke-Test.ps1
+
+  screenshots:
+    name: Windows screenshots
+    needs: windows
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[screenshots]')
+    runs-on: windows-2022
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show every notification area icon next to the clock
+        shell: powershell
+        run: |
+          Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer -Name EnableAutoTray -Value 0
+          Stop-Process -Name explorer -Force -ErrorAction SilentlyContinue
+          Start-Sleep -Seconds 5
+          if (-not (Get-Process explorer -ErrorAction SilentlyContinue)) { Start-Process explorer.exe; Start-Sleep -Seconds 8 }
+      - name: Take screenshots
+        shell: powershell
+        run: .\windows\tests\Take-Screenshots.ps1 -Out docs\screenshots
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-screenshots
+          path: docs/screenshots/windows-*.png
+      - name: Commit screenshots
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/screenshots
+          git diff --cached --quiet || git commit -m "Update Windows screenshots"
+          git push

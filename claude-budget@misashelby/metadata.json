@@ -1,0 +1,7 @@
+{
+  "uuid": "claude-budget@misashelby",
+  "name": "Budget Claude",
+  "description": "Barre du haut : une barre se remplit jusqu'au budget du jour de la limite hebdomadaire Claude (10 % gardés pour le week-end), suivie du % de la semaine utilisé, avec alertes à 25, 50, 75 et 100 %. Graphique de l'usage par jour de la semaine. Si la connexion a expiré, relève l'usage via « claude /usage ».",
+  "shell-version": ["48"],
+  "version": 3
+}
