@@ -6,6 +6,13 @@ param(
     [ValidateSet('fr', 'en')][string]$Lang = 'en'
 )
 $ErrorActionPreference = 'Stop'
+# Toute erreur imprévue devient une annotation GitHub (fichier, ligne, message).
+trap {
+    $where = "$([IO.Path]::GetFileName($_.InvocationInfo.ScriptName)):$($_.InvocationInfo.ScriptLineNumber)"
+    $text = "$where $($_.Exception.Message) | $($_.InvocationInfo.Line.Trim())" -replace "`r?`n", ' / '
+    Write-Host "::error::$text"
+    exit 1
+}
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -TypeDefinition @'

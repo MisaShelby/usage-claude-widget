@@ -3,6 +3,13 @@
 #   tzutil /s "Romance Standard Time"   (les cas sont en heure de Paris)
 #   powershell -NoProfile -ExecutionPolicy Bypass -File windows\tests\Run-Tests.ps1
 $ErrorActionPreference = 'Stop'
+# Toute erreur imprévue devient une annotation GitHub (fichier, ligne, message).
+trap {
+    $where = "$([IO.Path]::GetFileName($_.InvocationInfo.ScriptName)):$($_.InvocationInfo.ScriptLineNumber)"
+    $text = "$where $($_.Exception.Message) | $($_.InvocationInfo.Line.Trim())" -replace "`r?`n", ' / '
+    Write-Host "::error::$text"
+    exit 1
+}
 . (Join-Path $PSScriptRoot '..\BudgetCore.ps1')
 
 if ([TimeZoneInfo]::Local.Id -ne 'Romance Standard Time') {
@@ -87,6 +94,7 @@ function Check([string]$name, $actual, $expected) {
     if ($d) { [void]$script:failures.Add($d) } else { $script:passed++ }
 }
 
+Write-Host "PowerShell $($PSVersionTable.PSVersion) · fuseau $([TimeZoneInfo]::Local.Id)"
 $vectorsPath = Join-Path $PSScriptRoot '..\..\tests\vectors.json'
 $vectors = [IO.File]::ReadAllText($vectorsPath, [Text.Encoding]::UTF8) | ConvertFrom-Json
 $index = 0
@@ -122,7 +130,7 @@ $state = ConvertTo-Hash ($json | ConvertFrom-Json)
 Check 'état: notified reste un tableau' ($state.notified -is [array]) $true
 Check 'état: décimal → double' ($state.dayStartUtil -is [double]) $true
 $again = ConvertTo-Hash ((recordDay $state @{ todayBudget = 31.4; usedToday = 2 }) | ConvertTo-Json -Depth 10 -Compress | ConvertFrom-Json)
-Check 'état: aller-retour JSON' $again.history['2026-11-09'].used 2
+Check 'état: aller-retour JSON' ($again.history['2026-11-09'].used) 2
 Check 'état: notified après aller-retour' ($again.notified -is [array]) $true
 
 Write-Host "$passed vérifications réussies, $($failures.Count) en échec ($index cas de référence)."
