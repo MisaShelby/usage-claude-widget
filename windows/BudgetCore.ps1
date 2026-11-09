@@ -344,22 +344,22 @@ function pickLang($names) {
 $script:STRINGS = @{
     fr = @{
         title = 'Budget Claude'
-        today = 'Aujourd’hui'; todayOf = 'Aujourd’hui ({0})'
+        today = "Aujourd’hui"; todayOf = "Aujourd’hui ({0})"
         week = 'Semaine'; reset = 'Remise à zéro'; session = 'Session (5 h)'
         upcomingHeader = "Prochains jours (réserve week-end $WEEKEND_SHARE %)"
         lastDay = 'Dernier jour avant la remise à zéro'
-        weekendSuffix = ' (week-end)'; untilSuffix = ' (jusqu’à {0})'
+        weekendSuffix = ' (week-end)'; untilSuffix = " (jusqu’à {0})"
         updated = 'Mis à jour'; updatedViaCli = 'Mis à jour (via claude /usage)'
         viewWeek = 'Voir la semaine…'; refreshNow = 'Actualiser maintenant'; quit = 'Quitter'
         todayValue = '{0} / {1}  ·  {2}'; weekValue = '{0} utilisés · reste {1}'
         resetValue = '{0} à {1}  ·  {2} écoulé'
-        tooltipDay = 'Claude · aujourd’hui {0} ({1} / {2})'
+        tooltipDay = "Claude · aujourd’hui {0} ({1} / {2})"
         tooltipWeek = 'Claude · semaine {0} · remise à zéro {1} à {2}'
         chartTitle = 'Usage Claude de la semaine'; chartTitleRange = 'Usage Claude — semaine du {0} au {1}'
         chartSummary = '{0} utilisés · reste {1} · remise à zéro {2} à {3}'
         chartFooter = 'En % de la limite hebdomadaire · mis à jour à {0}'; close = 'Fermer'
         chartUntracked = 'non suivi'; chartUntrackedDays = 'jours non suivis'; chartTotal = '{0} au total'
-        chartToday = 'aujourd’hui'; chartFrom = 'dès {0}'; chartUntil = 'jusqu’à {0}'
+        chartToday = "aujourd’hui"; chartFrom = 'dès {0}'; chartUntil = "jusqu’à {0}"
         legendUsed = 'utilisé'; legendBudget = 'budget du jour'; legendOver = 'dépassement'; legendPlanned = 'prévu'
         planItem = '{0} : {1}'; planNone = 'plus aucun jour avant la remise à zéro ({0})'
         notifyOverTitle = 'Claude : budget du jour dépassé'
@@ -367,13 +367,13 @@ $script:STRINGS = @{
         notifyFullTitle = 'Claude : budget du jour atteint'
         notifyFullBody = "Vous avez utilisé les {0} prévus pour aujourd’hui.`nProchains jours : {1}"
         notifyLevelTitle = 'Claude : {0} % du budget du jour'
-        notifyLevelBody = '{0} utilisés sur {1} prévus aujourd’hui (semaine : {2}).'
+        notifyLevelBody = "{0} utilisés sur {1} prévus aujourd’hui (semaine : {2})."
         errNoLogin = 'Connexion Claude introuvable (%USERPROFILE%\.claude\.credentials.json)'
         errExpired = 'Connexion expirée : lancez Claude Code pour la renouveler'
         errTooMany = 'Trop de requêtes, nouvel essai dans 5 min'
         errHttp = 'Service indisponible (HTTP {0})'; errNetwork = 'Pas de connexion au service Claude'
         errUnexpected = 'Réponse inattendue du service Claude'
-        waiting = 'Claude · lecture de l’usage…'
+        waiting = "Claude · lecture de l’usage…"
     }
     en = @{
         title = 'Claude Budget'
