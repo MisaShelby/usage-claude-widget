@@ -1,4 +1,4 @@
-﻿﻿# Screenshots of the Windows widget in demo mode (sample data), for the README.
+﻿# Screenshots of the Windows widget in demo mode (sample data), for the README.
 # Run on a Windows desktop session (the CI uses a GitHub Actions Windows runner):
 #   powershell -NoProfile -ExecutionPolicy Bypass -File windows\tests\Take-Screenshots.ps1 -Out docs\screenshots
 # Full-screen captures and the list of the widget's windows go to -DebugDir, to understand a failure.

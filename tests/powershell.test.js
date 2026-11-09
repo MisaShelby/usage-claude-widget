@@ -8,9 +8,13 @@ const root = new URL('../windows/', import.meta.url).pathname;
 const scripts = dir => readdirSync(dir, { withFileTypes: true }).flatMap(e =>
     e.isDirectory() ? scripts(join(dir, e.name)) : e.name.endsWith('.ps1') ? [join(dir, e.name)] : []);
 
-test('les scripts PowerShell commencent par un BOM UTF-8 (sinon 5.1 les lit en ANSI)', () => {
-    for (const file of scripts(root))
-        assert.deepEqual([...readFileSync(file).subarray(0, 3)], [0xef, 0xbb, 0xbf], file);
+test('les scripts PowerShell commencent par un seul BOM UTF-8 (sinon 5.1 les lit en ANSI)', () => {
+    for (const file of scripts(root)) {
+        const head = [...readFileSync(file).subarray(0, 6)];
+        assert.deepEqual(head.slice(0, 3), [0xef, 0xbb, 0xbf], `${file}: BOM manquant`);
+        // Un 2e BOM devient un caractère avant le code : param() n'est plus en tête.
+        assert.notDeepEqual(head.slice(3, 6), [0xef, 0xbb, 0xbf], `${file}: BOM en double`);
+    }
 });
 
 test('aucune apostrophe typographique dans une chaîne entre apostrophes (PowerShell y voit une fin de chaîne)', () => {
